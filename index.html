@@ -103,10 +103,32 @@
     .show {
       opacity: 1;
     }
+
+    #bonusMsg {
+      background-color: #001f00;
+      border: 2px solid #00ff99;
+      padding: 14px 28px;
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #00ff99;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ff88;
+      margin-bottom: 20px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 15px #00ff88; }
+      50% { transform: scale(1.05); box-shadow: 0 0 25px #00ffcc; }
+      100% { transform: scale(1); box-shadow: 0 0 15px #00ff88; }
+    }
   </style>
 </head>
 <body>
   <div class="emoji">🎁</div>
+
+  <!-- Bonus Message -->
+  <div id="bonusMsg">🎉 ₹50 Bonus Waiting! Tap "Surprise" to claim 🎁</div>
 
   <button id="surpriseBtn" onclick="showQuestion()">🎉 Surprise</button>
 
@@ -129,6 +151,7 @@
 
   <script>
     function showQuestion() {
+      document.getElementById("bonusMsg").style.display = "none";
       document.getElementById("surpriseBtn").style.display = "none";
       document.getElementById("question").style.display = "block";
       document.getElementById("nameSelect").style.display = "block";
@@ -136,12 +159,17 @@
 
     function revealMessage() {
       const name = document.getElementById("nameSelect").value;
+      const msg = document.getElementById("msg");
+      const disclaimer = document.getElementById("disclaimer");
+      const sad = document.getElementById("sad");
+      const sound = document.getElementById("sadSound");
+
       if (name) {
-        document.getElementById("msg").textContent = `${name}, don't ask for money, work hard and earn it. 💪`;
-        document.getElementById("msg").classList.add("show");
-        document.getElementById("disclaimer").classList.add("show");
-        document.getElementById("sad").classList.add("show-sad");
-        document.getElementById("sadSound").play();
+        msg.textContent = `${name}, don't ask for money, work hard and earn it. 💪`;
+        msg.classList.add("show");
+        disclaimer.classList.add("show");
+        sad.classList.add("show-sad");
+        sound.play();
       }
     }
   </script>
