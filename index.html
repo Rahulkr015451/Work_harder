@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Surprise!</title>
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #111, #000);
+      background: linear-gradient(135deg, #0f0f0f, #000);
       color: #00ff99;
-      font-family: 'Courier New', monospace;
+      font-family: monospace;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
     }
 
     .emoji {
@@ -25,14 +24,50 @@
 
     @keyframes fly {
       0% { transform: translateY(0); }
-      50% { transform: translateY(-10px) rotate(10deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
       100% { transform: translateY(0); }
     }
 
     button {
       padding: 12px 24px;
-      font-size: 1.2rem;
+      font-size: 18px;
       background: #00ff99;
-      border: none;
       color: #000;
+      border: none;
       border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #0f0;
+      transform: scale(1.05);
+    }
+
+    .message {
+      margin-top: 30px;
+      font-size: 1.4rem;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      max-width: 80%;
+      text-align: center;
+    }
+
+    .show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="emoji">🎁</div>
+  <button onclick="revealMessage()">Surprise</button>
+  <div class="message" id="msg">Don't ask for money, work hard and earn it. 💪</div>
+
+  <script>
+    function revealMessage() {
+      document.getElementById("msg").classList.add("show");
+    }
+  </script>
+</body>
+</html>
