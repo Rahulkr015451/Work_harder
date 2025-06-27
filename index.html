@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Roast Challenge 🔥</title>
+  <title>Roast Generator 🔥</title>
   <style>
     body {
       margin: 0;
@@ -71,22 +71,14 @@
       width: 260px;
     }
 
-    .question, .options, .message, .disclaimer {
+    .question {
       margin-top: 20px;
-    }
-
-    .options {
+      font-size: 24px;
       display: none;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .options button {
-      background: #00ffaa;
     }
 
     .message {
+      margin-top: 30px;
       font-size: 2.4rem;
       font-weight: bold;
       opacity: 0;
@@ -95,6 +87,7 @@
     }
 
     .disclaimer {
+      margin-top: 15px;
       font-size: 1.2rem;
       color: #ff5;
       opacity: 0;
@@ -122,22 +115,12 @@
 <body>
   <div class="emoji">🎁</div>
 
-  <button id="surpriseBtn" onclick="askName()">🎉 Surprise</button>
+  <button id="surpriseBtn" onclick="showQuestion()">🎉 Surprise</button>
 
-  <div id="nameBlock">
-    <div class="question" id="askName" style="display:none;">What’s your name?</div>
-    <input type="text" id="nameInput" placeholder="Type your name" />
-    <button id="nextBtn" onclick="askQuestion()" style="display:none;">Next ➡️</button>
-  </div>
+  <div class="question" id="question">What's your name?</div>
+  <input type="text" id="nameInput" placeholder="Enter your name" />
 
-  <div class="question" id="roastQuestion" style="display:none;">
-    Why don’t you have a job yet?
-  </div>
-
-  <div class="options" id="roastOptions" style="display:none;">
-    <button onclick="roast('A')">I’m building a startup</button>
-    <button onclick="roast('B')">Corporate is not ready for me</button>
-  </div>
+  <button id="roastBtn" onclick="generateRoast()" style="display: none;">🔥 Get Roasted</button>
 
   <div class="message" id="msg"></div>
   <div class="disclaimer" id="disclaimer">❗ Don’t repeat this to me when I ask for money.</div>
@@ -152,34 +135,32 @@
   <audio id="sadSound" src="https://cdn.pixabay.com/audio/2021/09/01/audio_d47f91b2d3.mp3"></audio>
 
   <script>
-    function askName() {
+    function showQuestion() {
       document.getElementById("surpriseBtn").style.display = "none";
-      document.getElementById("askName").style.display = "block";
-      document.getElementById("nameInput").style.display = "inline-block";
-      document.getElementById("nextBtn").style.display = "inline-block";
+      document.getElementById("question").style.display = "block";
+      document.getElementById("nameInput").style.display = "block";
+      document.getElementById("roastBtn").style.display = "inline-block";
     }
 
-    function askQuestion() {
+    function generateRoast() {
       const name = document.getElementById("nameInput").value.trim();
-      if (!name) return alert("Type your name first 😅");
+      if (!name) return alert("Type your name first 😒");
 
-      window.userName = name;
-      document.getElementById("nameBlock").style.display = "none";
-      document.getElementById("roastQuestion").style.display = "block";
-      document.getElementById("roastOptions").style.display = "flex";
-    }
+      const roasts = [
+        "your wallet has less value than expired coupons. 💸",
+        "even dust escapes your pockets faster than money. 💨",
+        "your savings plan is just 'manifest it'. 📉",
+        "your money is in airplane mode. 📵",
+        "even your dreams are on budget cuts. 💀",
+        "your bank app cries when you open it. 😭",
+        "you're financially allergic to work. 🤧💸",
+        "even thieves avoid your wallet. 🦹‍♂️",
+        "your cash left you for someone more ambitious. 💔",
+        "your account is emptier than a ghost town. 👻"
+      ];
 
-    function roast(option) {
-      const name = window.userName;
-      let roastText = "";
-
-      if (option === 'A') {
-        roastText = `${name}, your 'startup' has more chai breaks than code. ☕👨‍💻`;
-      } else if (option === 'B') {
-        roastText = `${name}, yeah, they aren’t ready for unpaid comedians. 😂`;
-      }
-
-      document.getElementById("msg").textContent = roastText;
+      const randomRoast = roasts[Math.floor(Math.random() * roasts.length)];
+      document.getElementById("msg").textContent = `${name}, ${randomRoast}`;
       document.getElementById("msg").classList.add("show");
       document.getElementById("disclaimer").classList.add("show");
       document.getElementById("sad").classList.add("show-sad");
