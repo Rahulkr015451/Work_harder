@@ -1,22 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Message</title>
   <style>
     body {
-      background-color: #000;
-      color: #0f0;
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #1e1e1e, #000000);
+      color: #00ff99;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      font-family: monospace;
-      font-size: 24px;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+    }
+
+    .message-box {
       text-align: center;
+      max-width: 90%;
+    }
+
+    .emoji {
+      font-size: 48px;
+      animation: fly 2s infinite ease-in-out;
+    }
+
+    @keyframes fly {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-15px) rotate(10deg); }
+      100% { transform: translateY(0); }
+    }
+
+    .typewriter {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #00ff99;
+      animation: typing 4s steps(40, end), blink 0.75s step-end infinite;
+      font-size: 1.5rem;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
   </style>
 </head>
 <body>
-  Don't ask money, work hard and earn it.
+  <div class="message-box">
+    <div class="emoji">💸</div>
+    <div class="typewriter">Don't ask for money... work hard and earn it! 💪</div>
+  </div>
 </body>
 </html>
+
