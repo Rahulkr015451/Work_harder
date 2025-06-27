@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Roast Zone 🔥</title>
+  <title>Roast Challenge 🔥</title>
   <style>
     body {
       margin: 0;
@@ -48,7 +48,7 @@
       75% { transform: rotate(10deg); }
     }
 
-    button, select {
+    button, input {
       padding: 16px 32px;
       font-size: 22px;
       background: #00ff99;
@@ -65,19 +65,28 @@
       transform: scale(1.05);
     }
 
-    .question {
-      margin-top: 20px;
-      font-size: 24px;
+    input {
       display: none;
+      text-align: center;
+      width: 260px;
     }
 
-    .dropdown {
+    .question, .options, .message, .disclaimer {
+      margin-top: 20px;
+    }
+
+    .options {
       display: none;
-      margin-top: 15px;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .options button {
+      background: #00ffaa;
     }
 
     .message {
-      margin-top: 30px;
       font-size: 2.4rem;
       font-weight: bold;
       opacity: 0;
@@ -86,7 +95,6 @@
     }
 
     .disclaimer {
-      margin-top: 15px;
       font-size: 1.2rem;
       color: #ff5;
       opacity: 0;
@@ -114,24 +122,28 @@
 <body>
   <div class="emoji">🎁</div>
 
-  <button id="surpriseBtn" onclick="showQuestion()">🎉 Surprise</button>
+  <button id="surpriseBtn" onclick="askName()">🎉 Surprise</button>
 
-  <div class="question" id="question">Who are you?</div>
-  <select class="dropdown" id="nameSelect" onchange="revealMessage()">
-    <option value="">-- Select your name --</option>
-    <option value="Yathish">Yathish</option>
-    <option value="Jeevan">Jeevan</option>
-    <option value="Suhas">Suhas</option>
-    <option value="Ansar">Ansar</option>
-    <option value="Abhigna">Abhigna</option>
-    <option value="Suprith">Suprith</option>
-  </select>
+  <div id="nameBlock">
+    <div class="question" id="askName" style="display:none;">What’s your name?</div>
+    <input type="text" id="nameInput" placeholder="Type your name" />
+    <button id="nextBtn" onclick="askQuestion()" style="display:none;">Next ➡️</button>
+  </div>
+
+  <div class="question" id="roastQuestion" style="display:none;">
+    Why don’t you have a job yet?
+  </div>
+
+  <div class="options" id="roastOptions" style="display:none;">
+    <button onclick="roast('A')">I’m building a startup</button>
+    <button onclick="roast('B')">Corporate is not ready for me</button>
+  </div>
 
   <div class="message" id="msg"></div>
   <div class="disclaimer" id="disclaimer">❗ Don’t repeat this to me when I ask for money.</div>
   <div class="sad-emoji" id="sad">😢</div>
 
-  <img src="https://i.imgur.com/3v3zC2p.jpg" alt="Funny Meme" id="meme" class="meme" />
+  <img src="https://i.imgur.com/hzXq4R8.jpg" alt="Funny Meme" id="meme" class="meme" />
 
   <div class="retry">
     <button onclick="location.reload()">🔁 Roast Me Again</button>
@@ -140,66 +152,40 @@
   <audio id="sadSound" src="https://cdn.pixabay.com/audio/2021/09/01/audio_d47f91b2d3.mp3"></audio>
 
   <script>
-    function showQuestion() {
+    function askName() {
       document.getElementById("surpriseBtn").style.display = "none";
-      document.getElementById("question").style.display = "block";
-      document.getElementById("nameSelect").style.display = "block";
+      document.getElementById("askName").style.display = "block";
+      document.getElementById("nameInput").style.display = "inline-block";
+      document.getElementById("nextBtn").style.display = "inline-block";
     }
 
-    function revealMessage() {
-      const name = document.getElementById("nameSelect").value;
-      const msgBox = document.getElementById("msg");
-      const disclaimer = document.getElementById("disclaimer");
-      const sad = document.getElementById("sad");
-      const meme = document.getElementById("meme");
-      const retry = document.querySelector(".retry");
-      const sound = document.getElementById("sadSound");
+    function askQuestion() {
+      const name = document.getElementById("nameInput").value.trim();
+      if (!name) return alert("Type your name first 😅");
 
-      const messages = {
-        Yathish: [
-          "Yathish, your wallet has less value than expired coupons. 💸",
-          "Yathish, even dust escapes your pockets faster than money. 💨",
-          "Yathish, your savings plan is just vibes. 📉"
-        ],
-        Jeevan: [
-          "Jeevan, if laziness paid bills, you'd be rich already. 🛋️",
-          "Jeevan, your money’s in 'airplane mode'. 📵",
-          "Jeevan, even your dreams are on budget cuts. 💀"
-        ],
-        Suhas: [
-          "Suhas, even Google can’t find your savings. 🔍💰",
-          "Suhas, your bank app cries when you open it. 😭",
-          "Suhas, you're financially allergic to work. 🤧💸"
-        ],
-        Ansar: [
-          "Ansar, work hard or stay broke forever. Your choice. 🤷",
-          "Ansar, even thieves avoid your wallet. 🦹‍♂️",
-          "Ansar, your account is emptier than a ghost town. 👻"
-        ],
-        Abhigna: [
-          "Abhigna, asking won’t help. Try robbing a piggy bank. 🐷",
-          "Abhigna, your cash flow is more like a cash drought. 🌵",
-          "Abhigna, even UPI says 'insufficient hustle'. 🚫"
-        ],
-        Suprith: [
-          "Suprith, your UPI says 'try again later'. Forever. 🕳️",
-          "Suprith, your wallet has been in a coma for years. 🧠💤",
-          "Suprith, your cash left you for someone more ambitious. 💔"
-        ]
-      };
+      window.userName = name;
+      document.getElementById("nameBlock").style.display = "none";
+      document.getElementById("roastQuestion").style.display = "block";
+      document.getElementById("roastOptions").style.display = "flex";
+    }
 
-      if (name && messages[name]) {
-        const roastList = messages[name];
-        const randomIndex = Math.floor(Math.random() * roastList.length);
-        msgBox.textContent = roastList[randomIndex];
+    function roast(option) {
+      const name = window.userName;
+      let roastText = "";
 
-        msgBox.classList.add("show");
-        disclaimer.classList.add("show");
-        sad.classList.add("show-sad");
-        meme.style.display = "block";
-        retry.style.display = "block";
-        sound.play();
+      if (option === 'A') {
+        roastText = `${name}, your 'startup' has more chai breaks than code. ☕👨‍💻`;
+      } else if (option === 'B') {
+        roastText = `${name}, yeah, they aren’t ready for unpaid comedians. 😂`;
       }
+
+      document.getElementById("msg").textContent = roastText;
+      document.getElementById("msg").classList.add("show");
+      document.getElementById("disclaimer").classList.add("show");
+      document.getElementById("sad").classList.add("show-sad");
+      document.getElementById("meme").style.display = "block";
+      document.querySelector(".retry").style.display = "block";
+      document.getElementById("sadSound").play();
     }
   </script>
 </body>
