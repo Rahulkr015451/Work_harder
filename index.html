@@ -85,6 +85,14 @@
       max-width: 90%;
     }
 
+    .disclaimer {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      color: #ff5;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
     .show {
       opacity: 1;
     }
@@ -103,9 +111,11 @@
     <option value="Suhas">Suhas</option>
     <option value="Ansar">Ansar</option>
     <option value="Abhigna">Abhigna</option>
+    <option value="Suprith">Suprith</option> <!-- ✅ Added -->
   </select>
 
   <div class="message" id="msg"></div>
+  <div class="disclaimer" id="disclaimer">❗ Don’t repeat this to me when I ask for money.</div>
   <div class="sad-emoji" id="sad">😢</div>
 
   <audio id="sadSound" src="https://cdn.pixabay.com/audio/2021/09/01/audio_d47f91b2d3.mp3"></audio>
@@ -122,6 +132,7 @@
       if (name) {
         document.getElementById("msg").textContent = `${name}, don't ask for money, work hard and earn it. 💪`;
         document.getElementById("msg").classList.add("show");
+        document.getElementById("disclaimer").classList.add("show");
         document.getElementById("sad").classList.add("show-sad");
         document.getElementById("sadSound").play();
       }
