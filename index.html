@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Surprise!</title>
+  <title>Roast Zone 🔥</title>
   <style>
     body {
       margin: 0;
@@ -78,7 +78,7 @@
 
     .message {
       margin-top: 30px;
-      font-size: 2.6rem;
+      font-size: 2.4rem;
       font-weight: bold;
       opacity: 0;
       transition: opacity 1s ease-in-out;
@@ -91,6 +91,19 @@
       color: #ff5;
       opacity: 0;
       transition: opacity 1s ease-in-out;
+    }
+
+    .meme {
+      display: none;
+      margin-top: 25px;
+      width: 250px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #00ff99;
+    }
+
+    .retry {
+      display: none;
+      margin-top: 30px;
     }
 
     .show {
@@ -111,12 +124,18 @@
     <option value="Suhas">Suhas</option>
     <option value="Ansar">Ansar</option>
     <option value="Abhigna">Abhigna</option>
-    <option value="Suprith">Suprith</option> <!-- ✅ Added -->
+    <option value="Suprith">Suprith</option>
   </select>
 
   <div class="message" id="msg"></div>
   <div class="disclaimer" id="disclaimer">❗ Don’t repeat this to me when I ask for money.</div>
   <div class="sad-emoji" id="sad">😢</div>
+
+  <img src="https://i.imgur.com/3v3zC2p.jpg" alt="Funny Meme" id="meme" class="meme" />
+
+  <div class="retry">
+    <button onclick="location.reload()">🔁 Roast Me Again</button>
+  </div>
 
   <audio id="sadSound" src="https://cdn.pixabay.com/audio/2021/09/01/audio_d47f91b2d3.mp3"></audio>
 
@@ -129,12 +148,57 @@
 
     function revealMessage() {
       const name = document.getElementById("nameSelect").value;
-      if (name) {
-        document.getElementById("msg").textContent = `${name}, don't ask for money, work hard and earn it. 💪`;
-        document.getElementById("msg").classList.add("show");
-        document.getElementById("disclaimer").classList.add("show");
-        document.getElementById("sad").classList.add("show-sad");
-        document.getElementById("sadSound").play();
+      const msgBox = document.getElementById("msg");
+      const disclaimer = document.getElementById("disclaimer");
+      const sad = document.getElementById("sad");
+      const meme = document.getElementById("meme");
+      const retry = document.querySelector(".retry");
+      const sound = document.getElementById("sadSound");
+
+      const messages = {
+        Yathish: [
+          "Yathish, your wallet has less value than expired coupons. 💸",
+          "Yathish, even dust escapes your pockets faster than money. 💨",
+          "Yathish, your savings plan is just vibes. 📉"
+        ],
+        Jeevan: [
+          "Jeevan, if laziness paid bills, you'd be rich already. 🛋️",
+          "Jeevan, your money’s in 'airplane mode'. 📵",
+          "Jeevan, even your dreams are on budget cuts. 💀"
+        ],
+        Suhas: [
+          "Suhas, even Google can’t find your savings. 🔍💰",
+          "Suhas, your bank app cries when you open it. 😭",
+          "Suhas, you're financially allergic to work. 🤧💸"
+        ],
+        Ansar: [
+          "Ansar, work hard or stay broke forever. Your choice. 🤷",
+          "Ansar, even thieves avoid your wallet. 🦹‍♂️",
+          "Ansar, your account is emptier than a ghost town. 👻"
+        ],
+        Abhigna: [
+          "Abhigna, asking won’t help. Try robbing a piggy bank. 🐷",
+          "Abhigna, your cash flow is more like a cash drought. 🌵",
+          "Abhigna, even UPI says 'insufficient hustle'. 🚫"
+        ],
+        Suprith: [
+          "Suprith, your UPI says 'try again later'. Forever. 🕳️",
+          "Suprith, your wallet has been in a coma for years. 🧠💤",
+          "Suprith, your cash left you for someone more ambitious. 💔"
+        ]
+      };
+
+      if (name && messages[name]) {
+        const roastList = messages[name];
+        const randomIndex = Math.floor(Math.random() * roastList.length);
+        msgBox.textContent = roastList[randomIndex];
+
+        msgBox.classList.add("show");
+        disclaimer.classList.add("show");
+        sad.classList.add("show-sad");
+        meme.style.display = "block";
+        retry.style.display = "block";
+        sound.play();
       }
     }
   </script>
