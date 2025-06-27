@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Roast Generator 🔥</title>
+  <title>Surprise!</title>
   <style>
     body {
       margin: 0;
@@ -48,7 +48,7 @@
       75% { transform: rotate(10deg); }
     }
 
-    button, input {
+    button, select {
       padding: 16px 32px;
       font-size: 22px;
       background: #00ff99;
@@ -65,21 +65,20 @@
       transform: scale(1.05);
     }
 
-    input {
-      display: none;
-      text-align: center;
-      width: 260px;
-    }
-
     .question {
       margin-top: 20px;
       font-size: 24px;
       display: none;
     }
 
+    .dropdown {
+      display: none;
+      margin-top: 15px;
+    }
+
     .message {
       margin-top: 30px;
-      font-size: 2.4rem;
+      font-size: 2.6rem;
       font-weight: bold;
       opacity: 0;
       transition: opacity 1s ease-in-out;
@@ -94,19 +93,6 @@
       transition: opacity 1s ease-in-out;
     }
 
-    .meme {
-      display: none;
-      margin-top: 25px;
-      width: 250px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #00ff99;
-    }
-
-    .retry {
-      display: none;
-      margin-top: 30px;
-    }
-
     .show {
       opacity: 1;
     }
@@ -117,20 +103,20 @@
 
   <button id="surpriseBtn" onclick="showQuestion()">🎉 Surprise</button>
 
-  <div class="question" id="question">What's your name?</div>
-  <input type="text" id="nameInput" placeholder="Enter your name" />
-
-  <button id="roastBtn" onclick="generateRoast()" style="display: none;">🔥 Get Roasted</button>
+  <div class="question" id="question">Who are you?</div>
+  <select class="dropdown" id="nameSelect" onchange="revealMessage()">
+    <option value="">-- Select your name --</option>
+    <option value="Yathish">Yathish</option>
+    <option value="Jeevan">Jeevan</option>
+    <option value="Suhas">Suhas</option>
+    <option value="Ansar">Ansar</option>
+    <option value="Abhigna">Abhigna</option>
+    <option value="Suprith">Suprith</option> <!-- ✅ Added -->
+  </select>
 
   <div class="message" id="msg"></div>
   <div class="disclaimer" id="disclaimer">❗ Don’t repeat this to me when I ask for money.</div>
   <div class="sad-emoji" id="sad">😢</div>
-
-  <img src="https://i.imgur.com/hzXq4R8.jpg" alt="Funny Meme" id="meme" class="meme" />
-
-  <div class="retry">
-    <button onclick="location.reload()">🔁 Roast Me Again</button>
-  </div>
 
   <audio id="sadSound" src="https://cdn.pixabay.com/audio/2021/09/01/audio_d47f91b2d3.mp3"></audio>
 
@@ -138,35 +124,18 @@
     function showQuestion() {
       document.getElementById("surpriseBtn").style.display = "none";
       document.getElementById("question").style.display = "block";
-      document.getElementById("nameInput").style.display = "block";
-      document.getElementById("roastBtn").style.display = "inline-block";
+      document.getElementById("nameSelect").style.display = "block";
     }
 
-    function generateRoast() {
-      const name = document.getElementById("nameInput").value.trim();
-      if (!name) return alert("Type your name first 😒");
-
-      const roasts = [
-        "your wallet has less value than expired coupons. 💸",
-        "even dust escapes your pockets faster than money. 💨",
-        "your savings plan is just 'manifest it'. 📉",
-        "your money is in airplane mode. 📵",
-        "even your dreams are on budget cuts. 💀",
-        "your bank app cries when you open it. 😭",
-        "you're financially allergic to work. 🤧💸",
-        "even thieves avoid your wallet. 🦹‍♂️",
-        "your cash left you for someone more ambitious. 💔",
-        "your account is emptier than a ghost town. 👻"
-      ];
-
-      const randomRoast = roasts[Math.floor(Math.random() * roasts.length)];
-      document.getElementById("msg").textContent = `${name}, ${randomRoast}`;
-      document.getElementById("msg").classList.add("show");
-      document.getElementById("disclaimer").classList.add("show");
-      document.getElementById("sad").classList.add("show-sad");
-      document.getElementById("meme").style.display = "block";
-      document.querySelector(".retry").style.display = "block";
-      document.getElementById("sadSound").play();
+    function revealMessage() {
+      const name = document.getElementById("nameSelect").value;
+      if (name) {
+        document.getElementById("msg").textContent = `${name}, don't ask for money, work hard and earn it. 💪`;
+        document.getElementById("msg").classList.add("show");
+        document.getElementById("disclaimer").classList.add("show");
+        document.getElementById("sad").classList.add("show-sad");
+        document.getElementById("sadSound").play();
+      }
     }
   </script>
 </body>
