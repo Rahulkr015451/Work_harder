@@ -24,6 +24,12 @@
       animation: fly 2s infinite ease-in-out;
     }
 
+    @keyframes fly {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+      100% { transform: translateY(0); }
+    }
+
     .sad-emoji {
       font-size: 80px;
       margin-top: 30px;
@@ -36,42 +42,47 @@
       animation: wobble 2s infinite;
     }
 
-    @keyframes fly {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px) rotate(5deg); }
-      100% { transform: translateY(0); }
-    }
-
     @keyframes wobble {
       0%, 100% { transform: rotate(0); }
       25% { transform: rotate(-10deg); }
       75% { transform: rotate(10deg); }
     }
 
-    button {
-      padding: 20px 40px;
-      font-size: 28px;
+    button, select {
+      padding: 16px 32px;
+      font-size: 22px;
       background: #00ff99;
       color: #000;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
-      margin-top: 30px;
+      margin-top: 20px;
       transition: 0.3s ease;
     }
 
     button:hover {
       background: #0f0;
-      transform: scale(1.08);
+      transform: scale(1.05);
+    }
+
+    .question {
+      margin-top: 20px;
+      font-size: 24px;
+      display: none;
+    }
+
+    .dropdown {
+      display: none;
+      margin-top: 15px;
     }
 
     .message {
-      margin-top: 40px;
-      font-size: 2.8rem;
+      margin-top: 30px;
+      font-size: 2.6rem;
       font-weight: bold;
       opacity: 0;
       transition: opacity 1s ease-in-out;
-      max-width: 95%;
+      max-width: 90%;
     }
 
     .show {
@@ -81,18 +92,39 @@
 </head>
 <body>
   <div class="emoji">🎁</div>
-  <button onclick="revealMessage()">🎉 Surprise</button>
 
-  <div class="message" id="msg">Don't ask for money, work hard and earn it. 💪</div>
+  <button id="surpriseBtn" onclick="showQuestion()">🎉 Surprise</button>
+
+  <div class="question" id="question">Who are you?</div>
+  <select class="dropdown" id="nameSelect" onchange="revealMessage()">
+    <option value="">-- Select your name --</option>
+    <option value="Yathish">Yathish</option>
+    <option value="Jeevan">Jeevan</option>
+    <option value="Suhas">Suhas</option>
+    <option value="Ansar">Ansar</option>
+    <option value="Abhigna">Abhigna</option>
+  </select>
+
+  <div class="message" id="msg"></div>
   <div class="sad-emoji" id="sad">😢</div>
 
   <audio id="sadSound" src="https://cdn.pixabay.com/audio/2021/09/01/audio_d47f91b2d3.mp3"></audio>
 
   <script>
+    function showQuestion() {
+      document.getElementById("surpriseBtn").style.display = "none";
+      document.getElementById("question").style.display = "block";
+      document.getElementById("nameSelect").style.display = "block";
+    }
+
     function revealMessage() {
-      document.getElementById("msg").classList.add("show");
-      document.getElementById("sad").classList.add("show-sad");
-      document.getElementById("sadSound").play();
+      const name = document.getElementById("nameSelect").value;
+      if (name) {
+        document.getElementById("msg").textContent = `${name}, don't ask for money, work hard and earn it. 💪`;
+        document.getElementById("msg").classList.add("show");
+        document.getElementById("sad").classList.add("show-sad");
+        document.getElementById("sadSound").play();
+      }
     }
   </script>
 </body>
